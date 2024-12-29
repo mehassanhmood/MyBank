@@ -33,8 +33,8 @@ const AuthForm = ({type}: {type:string}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-
   const formSchema  = authFormSchema(type);
+
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
