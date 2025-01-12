@@ -29,11 +29,11 @@ export const signIn = async ({email, password}: signInProps) => {
     }
 }
 
-export const signUp = async (userData: SignUpParams) => {
-  
+export const signUp = async ({password, ...userData}: SignUpParams) => {
+
+  const {email, firstName, lastName} = userData;
   let newUserAccount;
 
-    const {email, password, firstName, lastName} = userData;
     try {
         const { account, database } = await createAdminClient();
 
@@ -111,7 +111,7 @@ export async function getLoggedInUser() {
         user: {
           client_user_id: user.$id
           },
-        client_name: user.name,
+        client_name: `${user.firstName} ${user.lastName}` ,
         products: ["auth"] as Products[],
         language: "en",
         country_codes: ["US"] as CountryCode[],
@@ -196,7 +196,7 @@ export async function getLoggedInUser() {
       //Return success message:
         return parseStringify({
           publicTokenExchange: "complete"
-        }),
+        })
 
     } catch (error) {
       console.error("An error occurred while making exchange token: ",error)
